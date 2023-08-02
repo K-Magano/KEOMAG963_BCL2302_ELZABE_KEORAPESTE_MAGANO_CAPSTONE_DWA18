@@ -126,6 +126,8 @@ const CarouselComponent =()=>{
   <img src={content.image} className="cardImage" style={PreviewCardStyles.cardImage} />
   <p className="cardTitle" style={PreviewCardStyles.cardTitle}>{content.title}</p>
   <div className="cardSeason">Season: {content.seasons}</div>
+  <p>Updated: {new Date(content.updated).toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })}</p>
+ 
 </div>
 
 </div>

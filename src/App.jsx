@@ -8,6 +8,8 @@ import FetchApi from "./FetchApi";
 import PodcastFaves from "./Components/PodcastFaves";
 import PodcastGenreTab from "./PodcastGenreTab";
 import HomePage from "./Components/LandingPage/HomePage";
+import PreviewPodcast from "./Components/testingcomps/PreviewPodcast";
+import ShowEpisodes from "./Components/testingcomps/ShowEpisodes";
 
 
 function App() {
@@ -16,13 +18,18 @@ function App() {
   const [selectedShowId, setSelectedShowId] = useState(null);
   const [showData, setShowData] = useState({});
   const [episodes, setEpisodes] = useState([]);
+  const [file, setFile] = useState(content);
+
+
 
   const [loading, setLoading] = useState(false);
   const [titles, setTitles] = useState([]);
   const [error, setError] = useState(null);
   const [isFavorite, setIsFavorite] = useState([])
+  const [favoriteList, setFavoriteList] = useState([])
   const [selectedGenre, setSelectedGenre] = useState(1);
   const [filteredGenres, setFilteredGenres] = useState(content);
+ 
 
 
 
@@ -47,16 +54,6 @@ function App() {
     });
 }, []);
 
-
-
-function handleToggleFavorite(id) {
-  setContent((prevContent) =>
-    prevContent.map((showData) =>
-      showData.id === id ? { ...showData, isFavorite: !showData.isFavorite } : showData
-    )
-  );
-}
- 
   useEffect(() => {
     setLoading(true), [];
 
@@ -93,7 +90,7 @@ function handleToggleFavorite(id) {
       .then((data) => setEpisodes(data));
   };
 
-  useEffect(() => {
+   useEffect(() => {
     fetchContent();
   }, []);
 
@@ -127,10 +124,27 @@ function handleToggleFavorite(id) {
     setFilteredGenres(filteredShows);
   }
 
-  function getGenreName(genreID) {
-    return genreID[genreId]
+  function getGenreName(genreId) {
+    return genreId[genreId]
   }
 
+  function handleToggleFavorite(id) {
+    const showIndex= content.findIndex((showData)=> showData.id === id);
+    if (showIndex !== -1){
+      const updatedContent = [...content];
+      updatedContent[showIndex] = {
+        ...updatedContent[showIndex], 
+        isFavorite: !updatedContent[showIndex].isFavorite};
+      setContent(updatedContent);
+
+      const updatedFavoriteList = updatedContent
+      .filter((showData)=> showData.isFavorite)
+      .map((showData)=> showData.id);
+      setFavoriteList(updatedFavoriteList);
+      setIsFavorite(updatedContent.filter((showData)=> showData.isFavorite));
+    }
+    
+  }
   const genreList = {
     1: 'Personal Growth',
     2: 'True Crime and Investigative Journalism',
@@ -147,39 +161,54 @@ function handleToggleFavorite(id) {
   return (
     <>
       
-<HomePage/>
+<h1>Thoughtful</h1>
+<CarouselComponent />
 
+      {/*<HomePage/>  
      
-      {/* <h1>Final Thoughts</h1> <CarouselComponent />
-      <PodcastFaves />
 
-      <PodcastSearch />
-      
-      <PodcastGenreTab onSelectGenre={handleSelectGenre}/>
-      
-      
-      Render PodcastApp <StringsArray
+
+   <PreviewPodcast/>      
+<ShowEpisodes/>
+  
+<PodcastFaves 
+        favoriteList={favoriteList}
+        isFavorite={isFavorite}/>  
+
+
+<PodcastSearch />
+
+
+
+<StringsArray
         shows={content}
         loading={loading}
         titles={titles}
         ascendingOrder={ascendingOrder}
         descendingOrder={descendingOrder}
         handleShowMore={handleShowMore}     />
-        
-       
-      <DateFilter
+
+
+         <DateFilter
         shows={content}
         loading={loading}
         titles={titles}
         ascendingOrder={ascendingOrder}
         descendingOrder={descendingOrder}
         handleShowMore={handleShowMore}
-      /> */}
+      /> 
+      
+      
+      Render PodcastApp 
+        
+       
+     */}
      
   
 
 
-      {/* Render PodcastApp    <FetchApi
+      {/* Render PodcastApp    
+      <FetchApi
         content={content}
         selectedShowId={selectedShowId}
         showData={showData}
@@ -188,23 +217,27 @@ function handleToggleFavorite(id) {
         fetchShow={fetchShow}
         fetchEpisodes={fetchEpisodes}
         handleShowButtonClick={handleShowButtonClick}
-      />   <DisplayCard
+      />  
+   
+   
+            <PodcastGenreTab onSelectGenre={handleSelectGenre}
+
+      />*/}
+  
+  <DisplayCard
         selectedShowId={selectedShowId}
         showData={showData}
         loading={loading}
         error={error}
         content={content}
         handleShowButtonClick={handleShowButtonClick}
+        favoriteList={favoriteList}
         isFavorite={isFavorite}
         handleToggleFavorite={handleToggleFavorite}
         filteredGenres={filteredGenres}
-       
         genreList={genreList}
-       
-      />*/}
-  
+/>
 
-    
 
       {/*
     
