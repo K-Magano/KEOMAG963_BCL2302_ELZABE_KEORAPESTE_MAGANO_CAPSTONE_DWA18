@@ -6,22 +6,10 @@ import 'react-multi-carousel/lib/styles.css';
 
 
 const CarouselComponent =()=>{
-
   const [content, setContent] = useState([]);
-
-  const fetchContent = () => {
-    fetch('https://podcast-api.netlify.app/shows')
-      .then((response) => response.json())
-      .then((data) => setContent(data));
-  };
-
   
-  useEffect(() => {
-    fetchContent();
-  }, []);
 
 
- 
   const responsive = {
      
     desktop: {
@@ -44,20 +32,12 @@ const CarouselComponent =()=>{
 
   const PreviewCardStyles ={
   
-
-  cardsList : {
-      display: 'flex',
-      flexWrap: 'nowrap',
-      gap: '20px',
-      overflowX: 'auto',
-  },
   
   Paper: {
     fontSize: "18px",
     width:'250px',
      margin: "auto 1rem",
-    AlignItem: "center",
-    textAlign: "center",
+   
     fontFamily: "arial",
     borderRadius: "1rem",
     boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.4)",
@@ -86,60 +66,79 @@ const CarouselComponent =()=>{
       display: 'flex',
       alignItems: 'center'
   },
-  
-  cardStar: {
-      height: '14px',
-  },
-  
-  
-  cardPrice: {
-      marginTop: 'auto'
-  },
-  
-  cardSeason : {
-      position: 'absolute',
-      top: '6px',
-      left: '6px',
-      backgroundColor: 'white',
-      padding: '5px 7px',
-      borderRadius: '2px',
-      fontWeight: 'bold',
-  },
-
-  Carousel:{
-  backgroundColor: 'blue',
-  }
-  
+    
+   
 }
 
 
-    return (
-      <> 
-      <Carousel responsive={responsive} className='Carousel'>
-        {content.map((content) =>(
+const genreList = {
+  1: 'Personal Growth',
+  2: 'True Crime and Investigative Journalism',
+  3: 'History',
+  4: 'Comedy',
+  5: 'Entertainment',
+  6: 'Business',
+  7: 'Fiction',
+  8: 'News',
+  9: 'Kids and Family',
 
-<Paper key={content.id} className="Paper" style={PreviewCardStyles.Paper}>
+};
+  
 
-<div className="card" style={PreviewCardStyles.card}>
+useEffect (() => { 
+  fetch('https://podcast-api.netlify.app/shows')
+  .then((response) => response.json())
+  .then((data) => { 
+        const updatedShows = data.map((shows)=> {
+      const updatedGenres = shows.genres.map((genreId)=> genreList[genreId])
+      return {
+        ...shows,
+        genres: updatedGenres,
+      }
+    })
 
-<div>
-  <img src={content.image} className="cardImage" style={PreviewCardStyles.cardImage} />
-  <p className="cardTitle" style={PreviewCardStyles.cardTitle}>{content.title}</p>
-  <div className="cardSeason">Season: {content.seasons}</div>
-  <p>Updated: {new Date(content.updated).toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })}</p>
+    setContent(updatedShows)
+  })
+  .catch((error) => {
+    console.error(error);
+  });  
+  
+  }, []);
+const genreNames = content.map((contentItem) =>
+contentItem.genres.map((genreNumber) => genreList[genreNumber])
+);
+
  
-</div>
+return (
+  <>
+      <Carousel responsive={responsive} className="Carousel">
+        {content.map((contentItem) => (
+          <Paper key={contentItem.id} className="Paper" style={PreviewCardStyles.Paper}>
+            <div className="card" style={PreviewCardStyles.card}>
+              <div>
+                <img src={contentItem.image} className="cardImage" style={PreviewCardStyles.cardImage} />
+                <p className="cardTitle" style={PreviewCardStyles.cardTitle}>
+                  {contentItem.title}
+                </p>
+                <div className="cardSeason">Season: {contentItem.seasons}</div>
+                <p>
+                  Updated: {new Date(contentItem.updated).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}
+                </p>
 
-</div>
-
-</Paper>
-
+                {/* Display genres by name */}
+                {contentItem.genres.map((genreName, genreIndex) => (
+                  <p key={genreIndex} className="tabText" style={PreviewCardStyles.tabText}>
+                   {genreName}
+                  </p>
+                ))}
+              </div>
+            </div>
+          </Paper>
         ))}
-      
-            </Carousel>
+      </Carousel>
     </>
   );
-}
+};
 
 
 export default CarouselComponent;

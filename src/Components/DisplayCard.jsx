@@ -121,6 +121,8 @@ function DisplayCard({
       padding : "10px",
       borderRadius: '9px',
       background:" #b52d5b",
+      display: "flex",
+      flexDirection: 'row',
     }
   };
 
@@ -132,20 +134,103 @@ function DisplayCard({
   }
 
   const [progress, setProgress] = useState({}); // State to track user progress
+  const [selectedSeason, setSelectedSeason] = useState(null);
 
-  return (
-    <div className="ParentDiv"style={CardStyles.ParentDiv} >
-      <div className="genres-container">
-        <h1>Shows</h1>
-        <Grid container spacing={6}>
-          {/* Display the selected show's data */}
-          {showData && !loading && !error && showData.seasons && (
-            <Paper
-              elevation={3}
-              className="Paper"
-              key={showData.id}
-              style={CardStyles.Paper}
-            >
+  const handleSeasonButtonClick = (seasonTitle) => {
+    // If the same season button is clicked again, deselect it
+    setSelectedSeason((prevSelectedSeason) =>
+      prevSelectedSeason === seasonTitle ? null : seasonTitle
+    );
+  };
+
+  return(   
+    
+    <div className="Parent Dive">
+  <div className="genres-container">
+    <h1>Shows</h1>
+    <Grid container spacing={1}>
+      {/* Display the selected show's data */}
+      {showData && !loading && !error && showData.seasons && (
+        <Paper
+          elevation={3}
+          className="Paper"
+          key={showData.id}
+          style={CardStyles.Paper}
+        >
+          <div>
+            <img
+              src={showData.image}
+              className="cardImage"
+              style={CardStyles.cardImage}
+              alt={showData.title}
+            />
+          </div>
+
+          <p className="cardTitle" style={CardStyles.cardTitle}>
+            {showData.title}
+          </p>
+          <div className="cardSeason" style={CardStyles.cardSeason}>
+            Season:{" "}
+            {showData.seasons.map((season) => season.title).join(", ")}
+          </div>
+          
+          <div className="CardUpdated" style={CardStyles.CardUpdated}>
+          Updated: {new Date(showData.updated).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}
+          </div>
+        </Paper>
+      )}
+
+      {/* Display the list of shows */}
+      {content.map((shows) => (
+        <Paper
+          elevation={3}
+          className="Paper"
+          key={shows.id}
+          style={CardStyles.Paper}
+        >
+          <div>
+            <img
+              src={shows.image}
+              className="cardImage"
+              style={CardStyles.cardImage}
+              alt={shows.title}
+            />
+          </div>
+          <p className="cardTitle" style={CardStyles.cardTitle}>
+            {shows.title}
+          </p>
+       
+      
+          <img src={shows.isFavorite
+          ? "../public/icons/filledLike.svg"
+          : "../public/icons/like.svg"}
+          
+          width="24" height="24" 
+            className="Faves"
+            onClick={() => handleToggleFavorite(shows.id)}
+          />
+          
+{/* <Tooltip  variant="plain">
+    <button variant="plain" onClick={handleButtonClick}>
+      {isClicked ? "Delete from Favorites" : "Add to Favorites"}
+    </button>
+      </Tooltip>*/}
+
+          <div className="cardSeason" style={CardStyles.cardSeason}>
+            Season: {shows.seasons}
+          </div>
+          <button
+            className="FetchButton"
+            onClick={() => handleShowButtonClick(shows.id)}
+          >
+            Fetch Show
+          </button>
+
+          <button>Seasons</button>
+
+          {selectedShowId === shows.id && showData.seasons && (
+            <Paper elevation={3} className="Paper" style={CardStyles.Paper}>
+              {/* Display the fetched showData */}
               <div>
                 <img
                   src={showData.image}
@@ -154,128 +239,13 @@ function DisplayCard({
                   alt={showData.title}
                 />
               </div>
-
+          
               <p className="cardTitle" style={CardStyles.cardTitle}>
                 {showData.title}
               </p>
               <div className="cardSeason" style={CardStyles.cardSeason}>
-                Season:{" "}
-                {showData.seasons.map((season) => season.title).join(", ")}
-              </div>
-              <div className="CardUpdated" style={CardStyles.CardUpdated}>
-                <p>Updated: {new Date(showData.updated).toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })}</p>
-              </div>
-            </Paper>
-          )}
-
-          {/* Display the list of shows */}
-          
-          {content.map((shows) => (
-            <Paper
-              elevation={3}
-              className="Paper"
-              key={shows.id}
-              style={CardStyles.Paper}
-            >
-              <div>
-                <img
-                  src={shows.image}
-                  className="cardImage"
-                  style={CardStyles.cardImage}
-                  alt={shows.title}
-                />
-              </div>
-              <p className="cardTitle" style={CardStyles.cardTitle}>
-                {shows.title}
-              </p>
-
-          
-              <img src={shows.isFavorite
-              ? "../public/icons/filledLike.svg"
-              : "../public/icons/like.svg"}
-              
-              width="24" height="24" 
-                className="Faves"
-                onClick={() => handleToggleFavorite(shows.id)}
-              />
-              
-    {/* <Tooltip  variant="plain">
-        <button variant="plain" onClick={handleButtonClick}>
-          {isClicked ? "Delete from Favorites" : "Add to Favorites"}
-        </button>
-          </Tooltip>*/}
-
-              <div className="cardSeason" style={CardStyles.cardSeason}>
-                Season: {shows.seasons}
-              </div>
-              <button
-                className="CardButton"
-                style={CardStyles.CardButton}
-                onClick={() => handleShowButtonClick(shows.id)}
-              >
-                Fetch Show
-              </button>
-
-              {selectedShowId === shows.id && showData.seasons && (
-                <Paper elevation={3} className="Paper2" style={CardStyles.Paper2}>
-                  {/* Display the fetched showData <div>
-                    <img
-                      src={showData.image}
-                      className="cardImage"
-                      style={CardStyles.cardImage}
-                      alt={showData.title}
-                    />
-                  </div> */}
-                 
-              
-                  <p className="cardTitle" style={CardStyles.cardTitle}>
-                    {showData.title}
-                  </p>
-                  <div className="cardSeason" style={CardStyles.cardSeason}>
-                    {showData.seasons.map((season) => (
-                      <div key={season.season}>
-                        <p>{season.title}</p>
-                        <img
-                          className="cardImage"
-                          style={CardStyles.cardImage}
-                          src={season.image}
-                        />
-
-                        {/* Fetching the all Episodes of the seasons */}
-                        {season.episodes &&
-                          season.episodes.map((episode) => (
-                            <div key={episode.episode}>
-                              <p
-                                className="EpisodeName"
-                                style={CardStyles.EpisodeName}
-                              >
-                                {episode.title}
-                              </p>
-                              <p
-                                className="EpisodeDescription"
-                                style={CardStyles.EpisodeDescription}
-                              >
-                                {episode.description}
-                              </p>
-                              <p>{episode.episode}</p>
-
-                              {/* AUDIO FILE */}
-                              <audio controls className="Audio" style={CardStyles.Audio}>
-                                <source src={episode.file} type="audio/mpeg" />
-                              </audio>
-                            </div>
-                          ))}
-                      </div>
-                    ))}
-                  </div>
-                </Paper>
-              )}
-
-              {showData &&
-                shows.id === selectedShowId &&
-                showData.seasons &&
-                showData.seasons.map((season) => (
-                  <div key={season.season} >
+                {showData.seasons.map((season) => (
+                  <div key={season.season}>
                     <p>{season.title}</p>
                     <img
                       className="cardImage"
@@ -286,10 +256,10 @@ function DisplayCard({
                     {/* Fetching the all Episodes of the seasons */}
                     {season.episodes &&
                       season.episodes.map((episode) => (
-                        <div key={episode.episode} >
+                        <div key={episode.episode}>
                           <p
-                            className="Episodes"
-                            style={CardStyles.Episodes}
+                            className="EpisodeName"
+                            style={CardStyles.EpisodeName}
                           >
                             {episode.title}
                           </p>
@@ -299,22 +269,75 @@ function DisplayCard({
                           >
                             {episode.description}
                           </p>
-                          <p>{episode.episode}</p>
+                          <p>Episode: {episode.episode}</p>
 
                           {/* AUDIO FILE */}
-                          <audio controls className="Audio" style={CardStyles.Audio} >
+                          
+                          <div className="Audio"  style={CardStyles.Audio}>
+                          <img src={shows.isFavorite
+          ? "../public/icons/filledLike.svg"
+          : "../public/icons/like.svg"}
+          
+          width="24" height="24" 
+            className="Faves"
+            onClick={() => handleToggleFavorite(shows.id)}
+          />
+                             <audio controls >
                             <source src={episode.file} type="audio/mpeg" />
-                          </audio>
+                          </audio></div>
+                         
                         </div>
                       ))}
                   </div>
                 ))}
+              </div>
             </Paper>
-          ))}
-          
-        </Grid>
-      </div>
-    </div>
-  );
+          )}
+
+          {showData &&
+            shows.id === selectedShowId &&
+            showData.seasons &&
+            showData.seasons.map((season) => (
+              <div key={season.season}>
+                <p>{season.title}</p>
+                <img
+                  className="cardImage"
+                  style={CardStyles.cardImage}
+                  src={season.image}
+                />
+
+                {/* Fetching the all Episodes of the seasons */}
+                {season.episodes &&
+                  season.episodes.map((episode) => (
+                    <div key={episode.episode}>
+                      <p
+                        className="EpisodeName"
+                        style={CardStyles.EpisodeName}
+                      >
+                        {episode.title}
+                      </p>
+                      <p
+                        className="EpisodeDescription"
+                        style={CardStyles.EpisodeDescription}
+                      >
+                        {episode.description}
+                      </p>
+                      <p>{episode.episode}</p>
+
+                      {/* AUDIO FILE */}
+                      <audio controls>
+                        <source src={episode.file} type="audio/mpeg" />
+                      </audio>
+                    </div>
+                  ))}
+              </div>
+            ))}
+        </Paper>
+      ))}
+    </Grid>
+  </div>
+</div>
+);
 }
 export default DisplayCard;
+

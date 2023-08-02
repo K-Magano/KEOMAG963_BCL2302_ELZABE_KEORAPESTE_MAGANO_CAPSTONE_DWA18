@@ -1,5 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { Drawer } from '@mui/material'
+
 
 function PodcastFaves(
   showData,
@@ -41,9 +43,27 @@ function PodcastFaves(
     localStorage.setItem("favorites", JSON.stringify(favoriteEpisodes));
   }, [favoriteEpisodes]);
 
+ 
+  const drawerStyles ={
+
+    drawer: {Width: "10px",
+    backgroundColor:"pink"},
+  
+   
+
+  } 
+
   return (
+   
     <div>
-      <h1>My Favorites</h1>
+       <Drawer
+    className="drawer"
+    variant="permanent"
+    anchor="top"
+    style={drawerStyles.drawer}
+    >
+      <h3>My Favorites</h3>
+      <p>text</p>
       {/* Display favorite episodes */}
       {favoriteEpisodes.map((episode) => (
         <div key={episode.id}>
@@ -55,7 +75,9 @@ function PodcastFaves(
           </button>
         </div>
       ))}
+      </Drawer>
     </div>
+   
   );
 }
 

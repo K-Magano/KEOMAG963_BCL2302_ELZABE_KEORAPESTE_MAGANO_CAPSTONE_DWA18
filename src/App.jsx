@@ -1,15 +1,18 @@
 import { useState, useEffect } from "react";
-import StringsArray from "./Components/Filters/StringsArray";
-import DateFilter from "./Components/Filters/DateFilter";
 import PodcastSearch from "./Components/Filters/Search/PodcastSearch";
 import CarouselComponent from "./Components/CarouselComponent";
 import DisplayCard from "./Components/DisplayCard";
-import FetchApi from "./FetchApi";
 import PodcastFaves from "./Components/PodcastFaves";
 import PodcastGenreTab from "./PodcastGenreTab";
 import HomePage from "./Components/LandingPage/HomePage";
 import PreviewPodcast from "./Components/testingcomps/PreviewPodcast";
 import ShowEpisodes from "./Components/testingcomps/ShowEpisodes";
+
+
+
+
+import LogInOutContainer from "./Components/LogIns/LogInOutContainer";
+
 
 
 function App() {
@@ -162,8 +165,11 @@ function App() {
     <>
       
 <h1>Thoughtful</h1>
-<CarouselComponent />
 
+<CarouselComponent />
+<PodcastFaves 
+        favoriteList={favoriteList}
+        isFavorite={isFavorite}/>  
       {/*<HomePage/>  
      
 
@@ -171,9 +177,7 @@ function App() {
    <PreviewPodcast/>      
 <ShowEpisodes/>
   
-<PodcastFaves 
-        favoriteList={favoriteList}
-        isFavorite={isFavorite}/>  
+
 
 
 <PodcastSearch />
@@ -251,3 +255,4 @@ function App() {
 }
 
 export default App;
+{/*SupabASE vGuCeJ834cvKM0bb*/}
