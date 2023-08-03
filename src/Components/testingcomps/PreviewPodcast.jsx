@@ -203,6 +203,14 @@ function PreviewPodcast({ onPodcastClick }) {
                 </div>
             </form>
 
+<div> <button onClick={() => removeFromFavorites(episode.id)}>
+                Remove from Favorites
+              </button>
+    
+              </div>
+           
+
+
             {podcasts.map((podcast) => (
                 <div key={podcast.id} className="podcastImage" onClick={() => onPodcastClick(podcast.id, podcast.genres)} >
                     <div className="imgDiv">

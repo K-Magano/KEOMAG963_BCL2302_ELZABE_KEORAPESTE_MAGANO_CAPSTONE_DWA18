@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import PodcastSearch from "./Components/Filters/Search/PodcastSearch";
+
 import CarouselComponent from "./Components/CarouselComponent";
 import DisplayCard from "./Components/DisplayCard";
 import PodcastFaves from "./Components/PodcastFaves";
@@ -18,10 +18,11 @@ import LogInOutContainer from "./Components/LogIns/LogInOutContainer";
 function App() {
   // Lift state up from PodcastApp
   const [content, setContent] = useState([]);
-  const [selectedShowId, setSelectedShowId] = useState(null);
+  const [selectedShowId, setSelectedShowId] = useState(null);//For the selected PodcastShow to display the episodes 
   const [showData, setShowData] = useState({});
   const [episodes, setEpisodes] = useState([]);
-  const [file, setFile] = useState(content);
+
+  const [file, setFile] = useState(content);//the Audio file
 
 
 
@@ -29,7 +30,7 @@ function App() {
   const [titles, setTitles] = useState([]);
   const [error, setError] = useState(null);
   const [isFavorite, setIsFavorite] = useState([])
-  const [favoriteList, setFavoriteList] = useState([])
+  const [favoriteList, setFavoriteList] = useState([])// Building the list in teh drawer
   const [selectedGenre, setSelectedGenre] = useState(1);
   const [filteredGenres, setFilteredGenres] = useState(content);
  
@@ -131,6 +132,7 @@ function App() {
     return genreId[genreId]
   }
 
+  {/*Switches the heart on and off*/}
   function handleToggleFavorite(id) {
     const showIndex= content.findIndex((showData)=> showData.id === id);
     if (showIndex !== -1){
@@ -161,6 +163,11 @@ function App() {
   
   };
 
+
+
+
+
+
   return (
     <>
       
@@ -169,13 +176,15 @@ function App() {
 <CarouselComponent />
 <PodcastFaves 
         favoriteList={favoriteList}
-        isFavorite={isFavorite}/>  
+        isFavorite={isFavorite}/> 
+        
+        
       {/*<HomePage/>  
-     
+      <PreviewPodcast/>  
 
 
-   <PreviewPodcast/>      
-<ShowEpisodes/>
+       <ShowEpisodes/>
+
   
 
 
@@ -234,12 +243,13 @@ function App() {
         loading={loading}
         error={error}
         content={content}
-        handleShowButtonClick={handleShowButtonClick}
+        genreList={genreList}
         favoriteList={favoriteList}
         isFavorite={isFavorite}
         handleToggleFavorite={handleToggleFavorite}
+        handleShowButtonClick={handleShowButtonClick}
         filteredGenres={filteredGenres}
-        genreList={genreList}
+        
 />
 
 
