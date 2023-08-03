@@ -54,7 +54,7 @@ function PodcastFaves({
   }, [favoriteEpisodes]);
 
   
-const drawerWidth = 300;
+const drawerWidth = 360;
 
 
 
@@ -95,7 +95,8 @@ const theme = useTheme();
       sx={{ ...(open && { display: 'none' }) }}
     > 
       <MenuIcon />
-      <Typography> <h3>My Favorites</h3></Typography>
+      
+      <Typography> <h3>Search & My Favorites</h3></Typography>
     </IconButton>
     
     
