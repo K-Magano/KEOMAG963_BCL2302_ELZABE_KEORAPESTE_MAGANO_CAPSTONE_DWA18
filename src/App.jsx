@@ -13,15 +13,24 @@ function App() {
   const BodyStyles = {
     Body: {
       paddingLeft: "40px",
-      height:"100%",
-      width:"100%",
-      backgroundColor:"",
+      height: "100%",
+      width: "100%",
     },
+
+    Text: {
+      paddingLeft: "40px",
+      height: "100%",
+      width: "100%",
+      color: "white",
+      fontSize: "25px",
+    },
+
     Heading: {
       color: "#841e62",
       fontSize: "55px",
       fontFamily: "New Century Schoolbook, TeX Gyre Schola, serif",
       paddingLeft: "40px",
+      marginTop: "200px",
     },
 
     BodyArt: {
@@ -31,6 +40,10 @@ function App() {
       paddingLeft: "40px",
       display: "flex",
       background: "pink",
+      backgroundImage:
+        "url(https://cdn.shopify.com/s/files/1/0070/7032/files/how_to_start_a_podcast.png?format=webp&v=1679063355&width=1024)",
+      backgroundSize: "cover",
+      height: "500px",
     },
     BodyImg: {
       width: "50%",
@@ -179,19 +192,23 @@ function App() {
 
   return (
     <div className="Body" style={BodyStyles.Body}>
-
       <div className="BodyArt" style={BodyStyles.BodyArt}>
-        <h1 className="Heading" style={BodyStyles.Heading}>
-          Thoughtful
-        </h1>
+        <div>
+          <h1 className="Heading" style={BodyStyles.Heading}>
+            Thoughtful..
+          </h1>
+          <div className="Text" style={BodyStyles.Text}>
+            {" "}
+            <p> Stay informed, entertained, and inspired with Thoughts</p>
+          </div>
+        </div>
       </div>
 
- <CarouselComponent />
-           <PodcastFaves 
-      favoriteList={favoriteList} 
-      isFavorite={isFavorite} />
-      
-     <DisplayCard
+      <CarouselComponent />
+
+      <PodcastFaves favoriteList={favoriteList} isFavorite={isFavorite} />
+
+      <DisplayCard
         selectedShowId={selectedShowId}
         showData={showData}
         loading={loading}
@@ -204,13 +221,11 @@ function App() {
         handleShowButtonClick={handleShowButtonClick}
         filteredGenres={filteredGenres}
       />
- 
+
       {/*
      <LogInOutContainer/>
         
       */}
-
-     
     </div>
   );
 }
