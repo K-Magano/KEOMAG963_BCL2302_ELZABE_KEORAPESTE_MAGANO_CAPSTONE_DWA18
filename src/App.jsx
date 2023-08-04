@@ -3,10 +3,6 @@ import { useState, useEffect } from "react";
 import CarouselComponent from "./Components/CarouselComponent";
 import DisplayCard from "./Components/DisplayCard";
 import PodcastFaves from "./Components/PodcastFaves";
-import PodcastGenreTab from "./PodcastGenreTab";
-
-import PreviewPodcast from "./Components/PreviewPodcast";
-
 import LogInOutContainer from "./Components/LogIns/LogInOutContainer";
 
 function App() {
