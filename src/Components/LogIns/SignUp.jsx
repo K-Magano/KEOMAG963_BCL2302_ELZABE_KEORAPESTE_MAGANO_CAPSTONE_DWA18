@@ -1,9 +1,10 @@
 
 import { useState } from "react";
-import {   Avatar,  Button,  Grid,  Paper,  TextField,  Typography } from "@mui/material";
+import { Avatar,  Button,  Grid,  Paper,  TextField,  Typography } from "@mui/material";
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+
 
 const SignUp = () => {
   const [formData, setFormData] = useState(
@@ -52,6 +53,13 @@ function handleSubmit(event) {
     submitToApi(formData)
     
 }
+
+const SignUp = async() => {
+  await supabase.auth.SignUp({
+    provider:"google"
+  })
+}
+
 
   return (
     <Grid>
@@ -107,7 +115,9 @@ function handleSubmit(event) {
             type="submit"
             
             sx={{ color: "white", borderColor: "white", marginTop:"10px" }}
-          fullWidth>
+          fullWidth
+          
+          onclick={SignUp}>
             Sign Up
           </Button >
 

@@ -92,7 +92,7 @@ function AudioPlayer({ showData,
           width="24"
           height="24"
           className="Faves"
-          onClick={handleToggleFavorite}
+          handleToggleFavorite={() => handleToggleFavorite(shows.id)}
         />
         <audio ref={audioRef} controls >
           <source src={file} type="audio/mpeg" />

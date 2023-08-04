@@ -1,5 +1,7 @@
 import supabase from "/config/supabaseClient";
-import LogInOutContainer from "../LogIns/LogInOutContainer.jsx";
+
+import Grid from "@mui/material/Grid"
+import { useEffect, useState } from "react";
 
 const MainContentStyles ={
 
@@ -21,10 +23,10 @@ const MainContentStyles ={
 }  
 
 function HomePage() {
-  console.log(supabase)
+  
   return (
     <div>
-          <LogInOutContainer/>
+         
          <Grid>
         
            <div>
@@ -39,6 +41,8 @@ function HomePage() {
   Whether you're seeking inspiration, seeking to expand your knowledge, or simply looking for entertaining content, Thoughts offers something for everyone.</p>
   </div>
 
+
+ 
   </Grid>
   
 

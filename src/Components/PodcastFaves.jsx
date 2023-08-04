@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-
+import Paper from "@mui/material/Paper"
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -21,7 +21,7 @@ function PodcastFaves({
   handleShowButtonClick,
   selectedShowId,
   isFavorite,
-  handleToggleFavorite,
+ 
   likeIcon,
   favoriteList,
 }) {
@@ -52,6 +52,19 @@ function PodcastFaves({
   useEffect(() => {
     localStorage.setItem("favorites", JSON.stringify(favoriteEpisodes));
   }, [favoriteEpisodes]);
+
+  // Function to handle toggling the favorite status of a show
+const handleToggleFavorite = (showId) => {
+  const showData = content.find((show) => show.id === showId);
+  if (showData) {
+    if(showData.isFavorite){
+      removeFromFavorites(showId);
+    
+  } else {
+        addToFavorites({...showData, isFavorite: true});
+    }
+  }
+};
 
   const FaveStyles = {
     Body: {
@@ -143,15 +156,28 @@ function PodcastFaves({
           </DrawerHeader>
 
           <Divider />
-          <PreviewPodcast />
+         <Paper> 
           {/* Display favorite episodes */}
           {favoriteEpisodes.map((episode) => (
             <div key={episode.id}>
               <h2>{episode.show}</h2>
               <p>Season: {episode.season}</p>{" "}
               <p>Episode Title: {episode.title}</p>
+              <img
+      src={
+        episode.isFavorite
+          ? "../public/icons/filledLike.svg"
+          : "../public/icons/like.svg"
+      }
+      width="24"
+      height="24"
+      className="Faves"
+      onClick={() => handleToggleFavorite(episode.id)}
+    />
             </div>
-          ))}
+          ))}</Paper>
+         
+           <PreviewPodcast />
         </Drawer>
       </Box>
     </div>

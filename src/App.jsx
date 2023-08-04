@@ -4,7 +4,7 @@ import CarouselComponent from "./Components/CarouselComponent";
 import DisplayCard from "./Components/DisplayCard";
 import PodcastFaves from "./Components/PodcastFaves";
 import PodcastGenreTab from "./PodcastGenreTab";
-import HomePage from "./Components/LandingPage/HomePage";
+
 import PreviewPodcast from "./Components/PreviewPodcast";
 
 import LogInOutContainer from "./Components/LogIns/LogInOutContainer";
@@ -179,16 +179,19 @@ function App() {
 
   return (
     <div className="Body" style={BodyStyles.Body}>
+
       <div className="BodyArt" style={BodyStyles.BodyArt}>
         <h1 className="Heading" style={BodyStyles.Heading}>
           Thoughtful
         </h1>
       </div>
 
-      <HomePage/>  
-     
-      {/*
- <DisplayCard
+ <CarouselComponent />
+           <PodcastFaves 
+      favoriteList={favoriteList} 
+      isFavorite={isFavorite} />
+      
+     <DisplayCard
         selectedShowId={selectedShowId}
         showData={showData}
         loading={loading}
@@ -201,9 +204,11 @@ function App() {
         handleShowButtonClick={handleShowButtonClick}
         filteredGenres={filteredGenres}
       />
-        <CarouselComponent />
-      <PodcastFaves favoriteList={favoriteList} isFavorite={isFavorite} />
-    */}
+ 
+      {/*
+     <LogInOutContainer/>
+        
+      */}
 
      
     </div>

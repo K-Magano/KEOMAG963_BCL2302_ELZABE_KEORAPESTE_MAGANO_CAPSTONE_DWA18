@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+
 import Paper from '@mui/material/Paper'
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import SignUp from "./SignUp"
 import SignIn from "./SignIn"
+
 
 
 const LogInOutContainer = () => {
@@ -50,6 +51,8 @@ const paperStyle = {
   
 }
 
+ 
+
     return (
     
 <Paper style={paperStyle}>
@@ -58,6 +61,10 @@ const paperStyle = {
       <Tab label="Sign Up"className='Labels' />
     </Tabs>
     <TabPanel value={value} index={0} >
+    <SupabaseUI
+      url={"https://rvkebmxmadjzjpthghvq.supabase.co/"}
+      apiKey={"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2a2VibXhtYWRqempwdGhnaHZxIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTA5OTE1NDIsImV4cCI6MjAwNjU2NzU0Mn0.qMloyDpMbFZ8jEUU1ux3La-YVh6lf3S24ld9_Rpjmaw"}
+    />
     <SignIn />
     </TabPanel>
     

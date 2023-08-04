@@ -2,7 +2,6 @@ import { useState, useRef } from "react";
 import { Grid, Paper } from "@mui/material";
 import AudioPlayer from "../Components/AudioPlayer.jsx";
 
-
 function DisplayCard({
   showData,
   loading,
@@ -14,10 +13,7 @@ function DisplayCard({
   favoriteList,
   handleToggleFavorite,
   likeIcon,
- 
 }) {
-
-
   const CardStyles = {
     ParentDiv: {
       background: "black",
@@ -53,7 +49,8 @@ function DisplayCard({
       display: "flex",
       flexDirection: "column",
       position: "relative",
-      backgroundImage:"url(https://images.rawpixel.com/image_600/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA1L3Y5MDQtbnVubnktMDA0LWFfMi5qcGc.jpg)",
+      backgroundImage:
+        "url(https://images.rawpixel.com/image_600/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA1L3Y5MDQtbnVubnktMDA0LWFfMi5qcGc.jpg)",
       padding: "15px",
       margin: "15px",
       ItemsAlign: "center",
@@ -77,8 +74,8 @@ function DisplayCard({
     },
 
     EpisodeNumber: {
-               fontsize: "12px",
-   color:"white",
+      fontsize: "12px",
+      color: "white",
       margin: "15px",
       ItemsAlign: "center",
     },
@@ -94,7 +91,7 @@ function DisplayCard({
       paddingBottom: "10px",
     },
 
-    seasonButton:{
+    seasonButton: {
       color: "BLACK",
       backgroundColor: "#841e62",
       border: "none",
@@ -102,15 +99,14 @@ function DisplayCard({
       padding: "10px",
       borderRadius: "9px",
       marginTop: "10px",
-  
+
       paddingBottom: "10px",
     },
 
-    sButton:{
-    display:"flex",
-    flexDirection:"column",
-    }
-,
+    sButton: {
+      display: "flex",
+      flexDirection: "column",
+    },
     CardUpdated: {
       color: "#2A445E",
       paddingBottom: "10px",
@@ -127,13 +123,11 @@ function DisplayCard({
       display: "flex",
       flexDirection: "row",
     },
-    currentProgress:{
-     fontSize:"15px",
-     color:"white"
+    currentProgress: {
+      fontSize: "15px",
+      color: "white",
     },
   };
-
- 
 
   if (loading) return <h1>Loading...</h1>;
 
@@ -142,45 +136,40 @@ function DisplayCard({
     return <h2>Oops something went wrong while fetching data</h2>;
   }
 
- 
-/*
+  /*
 When the component renders for the first time, 
-the progress object has no values for currentTime and duration*/ 
+the progress object has no values for currentTime and duration*/
 
-//State to track user progress
+  //State to track user progress
 
   const [progress, setProgress] = useState({
     currentTime: 0,
-  duration: 0,
-  progressPercentage: 0,
-  }); 
+    duration: 0,
+    progressPercentage: 0,
+  });
   const [selectedSeason, setSelectedSeason] = useState(null);
-  const audioRef = useRef(null)
+  const audioRef = useRef(null);
 
   const handleSeasonButtonClick = (seasonTitle) => {
     // If the same season button is clicked again, deselect it
     setSelectedSeason((prevSelectedSeason) =>
       prevSelectedSeason === seasonTitle ? null : seasonTitle
-
     );
-// Set loading State while fetching Data 
- 
+    // Set loading State while fetching Data
   };
-
-
 
   return (
     <div className="ParentDiv">
       <div className="genres-container">
-        <h1>Shows</h1>  <br></br> <p>..And a little something extra. </p>
-        
+        <h1>Shows</h1> <br></br> <p>..And a little something extra. </p>
         <Grid container spacing={1}>
-           
           {/* Display the list of shows */}
           {content.map((shows) => (
-           <div key={showData.id} 
-           className="PodcastCard" 
-           style={CardStyles.PodcastCard}>
+            <div
+              key={showData.id}
+              className="PodcastCard"
+              style={CardStyles.PodcastCard}
+            >
               <div>
                 <img
                   src={shows.image}
@@ -192,8 +181,8 @@ the progress object has no values for currentTime and duration*/
               <p className="cardTitle" style={CardStyles.cardTitle}>
                 {shows.title}
               </p>
-                <div> 
-                  Add to Faves
+              <div>
+                Add to Faves
                 <img
                   src={
                     shows.isFavorite
@@ -203,11 +192,9 @@ the progress object has no values for currentTime and duration*/
                   width="24"
                   height="24"
                   className="Faves"
-                  
-                  onClick={() => handleToggleFavorite()}
-                /></div>
-               
-              
+                  onClick={() => handleToggleFavorite(shows.id)}
+                />
+              </div>
 
               <div className="cardSeason" style={CardStyles.cardSeason}>
                 Season: {shows.seasons}
@@ -228,9 +215,6 @@ the progress object has no values for currentTime and duration*/
                 Fetch Show
               </button>
 
-  
-             
-
               {selectedShowId === shows.id && showData && (
                 <Paper elevation={3} className="Paper" style={CardStyles.Paper}>
                   {/* Display the fetched showData */}
@@ -247,63 +231,69 @@ the progress object has no values for currentTime and duration*/
                     {showData.title}
                   </p>
 
-                    {showData?.seasons?.map((season) => (
-                      <div key={season.season}>
-                        <div className="sButton" style={CardStyles.sButton}>
+                  {showData?.seasons?.map((season) => (
+                    <div key={season.season}>
+                      <div className="sButton" style={CardStyles.sButton}>
+                        <button
+                          onClick={() => handleSeasonButtonClick(season.title)}
+                          className="seasonButton"
+                          style={CardStyles.seasonButton}
+                        >
+                          {season.title}
+                        </button>
+                      </div>
 
-                        <button onClick={() => handleSeasonButtonClick(season.title)}className="seasonButton" 
-                        style={CardStyles.seasonButton} >{season.title}</button>
-                        </div>
+                      {selectedSeason === season.title && (
+                        <>
+                          {/* Fetching the all Episodes of the seasons */}
+                          {season.episodes && season.episodes.length > 0 ? (
+                            season.episodes.map((episode) => (
+                              <div key={episode.episode}>
+                                {/* Episode details */}
+                                {/* Check if the episode object is valid */}
+                                {episode.file && (
+                                  <>
+                                    <p
+                                      className="EpisodeName"
+                                      style={CardStyles.EpisodeName}
+                                    >
+                                      {episode.title}
+                                    </p>
 
-          {selectedSeason === season.title && (
-                         <>
-            
-   {/* Fetching the all Episodes of the seasons */}
-   {season.episodes && season.episodes.length > 0 ? (
-                              season.episodes.map((episode) => (
-                                <div key={episode.episode}>
-                                  {/* Episode details */}
-                                  {/* Check if the episode object is valid */}
-                                  {episode.file && (
-                                    <>
+                                    <img
+                                      className="cardImage"
+                                      style={CardStyles.cardImage}
+                                      src={season.image}
+                                      alt={season.title}
+                                    />
+                                    <p
+                                      className="EpisodeDescription"
+                                      style={CardStyles.EpisodeDescription}
+                                    >
+                                      {episode.description}
+                                    </p>
+                                    {/* Display the number of episodes in the season */}
+                                    <p
+                                      className="EpisodeNumber"
+                                      style={CardStyles.EpisodeNumber}
+                                    >
+                                      Number of Episodes:{" "}
+                                      {season.episodes.length}
+                                    </p>
+                                    <p>Episode: {episode.episode}</p>
 
+                                    {/* AUDIO FILE */}
 
-                                      <p
-                                        className="EpisodeName"
-                                        style={CardStyles.EpisodeName}
-                                      >
-                                        {episode.title}
-                                      </p>
-
-                                      <img
-                className="cardImage"
-                style={CardStyles.cardImage}
-                src={season.image}
-                alt={season.title}
-              />
-                                      <p
-                                        className="EpisodeDescription"
-                                        style={CardStyles.EpisodeDescription}
-                                      >
-                                        {episode.description}
-                                      </p>
-                                      {/* Display the number of episodes in the season */}
-                                      <p className="EpisodeNumber" style={CardStyles.EpisodeNumber}>
-                                        Number of Episodes: {season.episodes.length}
-                                      </p>
-                                      <p>Episode: {episode.episode}</p>
-
-                                      {/* AUDIO FILE */}
-                                     
-                            <AudioPlayer
-                                           showData={showData}
-                                           file={episode.file}
-                                           isFavorite={shows.isFavorite}
-                                           progress={progress}
-                                           handleToggleFavorite={handleToggleFavorite}
-                                        />  
-                            
-                            </>
+                                    <AudioPlayer
+                                      showData={showData}
+                                      file={episode.file}
+                                      isFavorite={shows.isFavorite}
+                                      progress={progress}
+                                      onClick={() =>
+                                        handleToggleFavorite(shows.id)
+                                      }
+                                    />
+                                  </>
                                 )}
                               </div>
                             ))
@@ -325,4 +315,3 @@ the progress object has no values for currentTime and duration*/
 }
 
 export default DisplayCard;
-
