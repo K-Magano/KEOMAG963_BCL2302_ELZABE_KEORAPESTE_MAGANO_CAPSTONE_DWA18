@@ -5,58 +5,69 @@ import DisplayCard from "./Components/DisplayCard";
 import PodcastFaves from "./Components/PodcastFaves";
 import PodcastGenreTab from "./PodcastGenreTab";
 import HomePage from "./Components/LandingPage/HomePage";
-import PreviewPodcast from "./Components/testingcomps/PreviewPodcast";
-import ShowEpisodes from "./Components/testingcomps/ShowEpisodes";
-
-
-
+import PreviewPodcast from "./Components/PreviewPodcast";
 
 import LogInOutContainer from "./Components/LogIns/LogInOutContainer";
 
-
-
 function App() {
+  const BodyStyles = {
+    Body: {
+      paddingLeft: "40px",
+    },
+    Heading: {
+      color: "#841e62",
+      fontSize: "55px",
+      fontFamily: "New Century Schoolbook, TeX Gyre Schola, serif",
+      paddingLeft: "40px",
+    },
+
+    BodyArt: {
+      color: "#841e62",
+      fontSize: "55px",
+      fontFamily: "New Century Schoolbook, TeX Gyre Schola, serif",
+      paddingLeft: "40px",
+      display: "flex",
+      background: "pink",
+    },
+    BodyImg: {
+      width: "50%",
+      height: "50%",
+    },
+  };
+
   // Lift state up from PodcastApp
   const [content, setContent] = useState([]);
-  const [selectedShowId, setSelectedShowId] = useState(null);//For the selected PodcastShow to display the episodes 
+  const [selectedShowId, setSelectedShowId] = useState(null); //For the selected PodcastShow to display the episodes
   const [showData, setShowData] = useState({});
   const [episodes, setEpisodes] = useState([]);
 
-  const [file, setFile] = useState(content);//the Audio file
-
-
-
+  const [file, setFile] = useState(content); //the Audio file
   const [loading, setLoading] = useState(false);
   const [titles, setTitles] = useState([]);
   const [error, setError] = useState(null);
-  const [isFavorite, setIsFavorite] = useState([])
-  const [favoriteList, setFavoriteList] = useState([])// Building the list in teh drawer
+  const [isFavorite, setIsFavorite] = useState([]);
+  const [favoriteList, setFavoriteList] = useState([]); // Building the list in teh drawer
   const [selectedGenre, setSelectedGenre] = useState(1);
   const [filteredGenres, setFilteredGenres] = useState(content);
- 
 
-
-
-
-
- useEffect(() => {
-  setLoading(true);
-  fetch("https://podcast-api.netlify.app/shows")
-    .then((response) => response.json())
-    .then((data) => {
-      const initialState = data.map((showData) => ({
-        ...showData,
-        isFavorite: false, // Add the isFavorite property to each showData object
-      }));
-      setContent(initialState);
-      setLoading(false);
-    })
-    .catch((error) => {
-      console.error(error);
-      setLoading(false);
-      setError("Oops something went wrong while fetching data");
-    });
-}, []);
+  useEffect(() => {
+    setLoading(true);
+    fetch("https://podcast-api.netlify.app/shows")
+      .then((response) => response.json())
+      .then((data) => {
+        const initialState = data.map((showData) => ({
+          ...showData,
+          isFavorite: false, // Add the isFavorite property to each showData object
+        }));
+        setContent(initialState);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+        setError("Oops something went wrong while fetching data");
+      });
+  }, []);
 
   useEffect(() => {
     setLoading(true), [];
@@ -65,8 +76,7 @@ function App() {
       .then((response) => response.json())
       .then((data) => {
         setShowData(data);
-        setTitles(data.map((shows) => shows.title)), 
-        setLoading(false);
+        setTitles(data.map((shows) => shows.title)), setLoading(false);
       })
 
       .catch((error) => {
@@ -94,7 +104,7 @@ function App() {
       .then((data) => setEpisodes(data));
   };
 
-   useEffect(() => {
+  useEffect(() => {
     fetchContent();
   }, []);
 
@@ -120,124 +130,67 @@ function App() {
     setShowCount((prevCount) => prevCount + 20);
   };
 
-  const handleSelectGenre = (genreValue) =>{
+  const handleSelectGenre = (genreValue) => {
     setSelectedGenre(genreValue);
-    const filteredShows = content.filter((show)=> 
-    show.genres.includes(genreValue)
+    const filteredShows = content.filter((show) =>
+      show.genres.includes(genreValue)
     );
     setFilteredGenres(filteredShows);
-  }
+  };
 
   function getGenreName(genreId) {
-    return genreId[genreId]
+    return genreId[genreId];
   }
 
-  {/*Switches the heart on and off*/}
+  {
+    /*Switches the heart on and off*/
+  }
   function handleToggleFavorite(id) {
-    const showIndex= content.findIndex((showData)=> showData.id === id);
-    if (showIndex !== -1){
+    const showIndex = content.findIndex((showData) => showData.id === id);
+    if (showIndex !== -1) {
       const updatedContent = [...content];
       updatedContent[showIndex] = {
-        ...updatedContent[showIndex], 
-        isFavorite: !updatedContent[showIndex].isFavorite};
+        ...updatedContent[showIndex],
+        isFavorite: !updatedContent[showIndex].isFavorite,
+      };
       setContent(updatedContent);
 
       const updatedFavoriteList = updatedContent
-      .filter((showData)=> showData.isFavorite)
-      .map((showData)=> showData.id);
+        .filter((showData) => showData.isFavorite)
+        .map((showData) => showData.id);
       setFavoriteList(updatedFavoriteList);
-      setIsFavorite(updatedContent.filter((showData)=> showData.isFavorite));
+      setIsFavorite(updatedContent.filter((showData) => showData.isFavorite));
     }
-    
   }
   const genreList = {
-    1: 'Personal Growth',
-    2: 'True Crime and Investigative Journalism',
-    3: 'History',
-    4: 'Comedy',
-    5: 'Entertainment',
-    6: 'Business',
-    7: 'Fiction',
-    8: 'News',
-    9: 'Kids and Family',
-  
+    1: "Personal Growth",
+    2: "True Crime and Investigative Journalism",
+    3: "History",
+    4: "Comedy",
+    5: "Entertainment",
+    6: "Business",
+    7: "Fiction",
+    8: "News",
+    9: "Kids and Family",
   };
 
-
-
-
-
-
   return (
-    <>
-      
-<h1>Thoughtful</h1>
+    <div className="Body" style={BodyStyles.Body}>
+      <div className="BodyArt" style={BodyStyles.BodyArt}>
+        <h1 className="Heading" style={BodyStyles.Heading}>
+          Thoughtful
+        </h1>
+      </div>
 
-<CarouselComponent />
-<PodcastFaves 
-        favoriteList={favoriteList}
-        isFavorite={isFavorite}/> 
-        
-        
+      <CarouselComponent />
+      <PodcastFaves favoriteList={favoriteList} isFavorite={isFavorite} />
+
       {/*<HomePage/>  
-      <PreviewPodcast/>  
 
-
-       <ShowEpisodes/>
-
-  
-
-
-
-<PodcastSearch />
-
-
-
-<StringsArray
-        shows={content}
-        loading={loading}
-        titles={titles}
-        ascendingOrder={ascendingOrder}
-        descendingOrder={descendingOrder}
-        handleShowMore={handleShowMore}     />
-
-
-         <DateFilter
-        shows={content}
-        loading={loading}
-        titles={titles}
-        ascendingOrder={ascendingOrder}
-        descendingOrder={descendingOrder}
-        handleShowMore={handleShowMore}
-      /> 
       
-      
-      Render PodcastApp 
-        
-       
-     */}
-     
-  
+    */}
 
-
-      {/* Render PodcastApp    
-      <FetchApi
-        content={content}
-        selectedShowId={selectedShowId}
-        showData={showData}
-        episodes={episodes}
-        fetchContent={fetchContent}
-        fetchShow={fetchShow}
-        fetchEpisodes={fetchEpisodes}
-        handleShowButtonClick={handleShowButtonClick}
-      />  
-   
-   
-            <PodcastGenreTab onSelectGenre={handleSelectGenre}
-
-      />*/}
-  
-  <DisplayCard
+      <DisplayCard
         selectedShowId={selectedShowId}
         showData={showData}
         loading={loading}
@@ -249,20 +202,12 @@ function App() {
         handleToggleFavorite={handleToggleFavorite}
         handleShowButtonClick={handleShowButtonClick}
         filteredGenres={filteredGenres}
-        
-/>
-
-
-      {/*
-    
-    
-    
-  */}
-
- 
-    </>
+      />
+    </div>
   );
 }
 
 export default App;
-{/*SupabASE vGuCeJ834cvKM0bb*/}
+{
+  /*SupabASE vGuCeJ834cvKM0bb*/
+}

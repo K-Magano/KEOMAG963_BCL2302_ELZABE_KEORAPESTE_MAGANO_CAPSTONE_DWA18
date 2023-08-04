@@ -1,7 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 import { Grid, Paper } from "@mui/material";
-import PodcastFaves from "./PodcastFaves";
-import LoadingState from "../Components/LoadingState"
 import AudioPlayer from "../Components/AudioPlayer.jsx";
 
 
@@ -55,9 +53,8 @@ function DisplayCard({
       display: "flex",
       flexDirection: "column",
       position: "relative",
-      backgroundColor: "Green",
+      backgroundImage:"url(https://images.rawpixel.com/image_600/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA1L3Y5MDQtbnVubnktMDA0LWFfMi5qcGc.jpg)",
       padding: "15px",
-
       margin: "15px",
       ItemsAlign: "center",
     },
@@ -79,17 +76,9 @@ function DisplayCard({
       ItemsAlign: "center",
     },
 
-    Episodes: {
-      width: "200%",
-      height: "100%",
-      fontsize: "12px",
-      flex: "0 0 auto",
-      display: "flex",
-      flexDirection: "column",
-      position: "relative",
-      backgroundColor: "blue",
-      padding: "15px",
-
+    EpisodeNumber: {
+               fontsize: "12px",
+   color:"white",
       margin: "15px",
       ItemsAlign: "center",
     },
@@ -180,7 +169,8 @@ the progress object has no values for currentTime and duration*/
   return (
     <div className="ParentDiv">
       <div className="genres-container">
-        <h1>Shows</h1>
+        <h1>Shows</h1>  <br></br> <p>..And a little something extra. </p>
+        
         <Grid container spacing={1}>
            
           {/* Display the list of shows */}
@@ -199,8 +189,8 @@ the progress object has no values for currentTime and duration*/
               <p className="cardTitle" style={CardStyles.cardTitle}>
                 {shows.title}
               </p>
-                {" "}
-                Add to your Faves
+                <div> 
+                  Add to Faves
                 <img
                   src={
                     shows.isFavorite
@@ -211,8 +201,9 @@ the progress object has no values for currentTime and duration*/
                   height="24"
                   className="Faves"
                   
-                  onClick={() => handleToggleFavorite(shows)}
-                />
+                  onClick={() => handleToggleFavorite()}
+                /></div>
+               
               
 
               <div className="cardSeason" style={CardStyles.cardSeason}>
@@ -229,24 +220,13 @@ the progress object has no values for currentTime and duration*/
               <button
                 className="FetchButton"
                 style={CardStyles.FetchButton}
-                disabled={loading}
                 onClick={() => handleShowButtonClick(shows.id)}
               >
                 Fetch Show
               </button>
 
-              {/* <PodcastFaves showData={showData}
-  loading={loading}
-  error={error}
-  content={content}
-  handleShowButtonClick={handleShowButtonClick}
-  selectedShowId={selectedShowId}
-  isFavorite={isFavorite}
-  handleToggleFavorite={handleToggleFavorite} // Pass handleToggleFavorite
-  likeIcon={likeIcon}
-/> */}
- 
-              {loading && <LoadingState />}
+  
+             
 
               {selectedShowId === shows.id && showData && (
                 <Paper elevation={3} className="Paper" style={CardStyles.Paper}>
@@ -305,7 +285,7 @@ the progress object has no values for currentTime and duration*/
                                         {episode.description}
                                       </p>
                                       {/* Display the number of episodes in the season */}
-                                      <p>
+                                      <p className="EpisodeNumber" style={CardStyles.EpisodeNumber}>
                                         Number of Episodes: {season.episodes.length}
                                       </p>
                                       <p>Episode: {episode.episode}</p>
@@ -315,9 +295,9 @@ the progress object has no values for currentTime and duration*/
                             <AudioPlayer
                                            showData={showData}
                                            file={episode.file}
-                                           isFavorite={favoriteEpisodes.some((favEpisode) => favEpisode.id === episode.id)} // Check if the current episode is in favorites
+                                           isFavorite={shows.isFavorite}
                                            progress={progress}
-                                           handleToggleFavorite={() => handleToggleFavorite(episode)}
+                                           handleToggleFavorite={handleToggleFavorite}
                                         />  
                             
                             </>

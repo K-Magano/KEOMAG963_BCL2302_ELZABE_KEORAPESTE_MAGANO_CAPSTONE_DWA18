@@ -67,7 +67,18 @@ const CarouselComponent =()=>{
       alignItems: 'center'
   },
     
+  Carousel: {
+    backgroundImage:"url(https://images.rawpixel.com/image_600/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA1L3Y5MDQtbnVubnktMDA0LWFfMi5qcGc.jpg)",
    
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    marginBottom: "50px",
+    width: "100%",
+    height: "100%",
+    borderRadius: "5px",
+    marginTop: "10px",
+
+  },
 }
 
 
@@ -110,8 +121,8 @@ contentItem.genres.map((genreNumber) => genreList[genreNumber])
 
  
 return (
-  <>
-      <Carousel responsive={responsive} className="Carousel">
+  <div className="Carousel" style={PreviewCardStyles.Carousel}>
+      <Carousel responsive={responsive} className="Carousel" style={PreviewCardStyles.Carousel}>
         {content.map((contentItem) => (
           <Paper key={contentItem.id} className="Paper" style={PreviewCardStyles.Paper}>
             <div className="card" style={PreviewCardStyles.card}>
@@ -136,7 +147,7 @@ return (
           </Paper>
         ))}
       </Carousel>
-    </>
+    </div>
   );
 };
 

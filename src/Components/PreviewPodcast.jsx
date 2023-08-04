@@ -22,23 +22,22 @@ function PreviewPodcast({ onPodcastClick }) {
 
   const CardStyles = {
     cardImage: {
-      width: "80%",
+      width: "60%",
       borderRadius: "9px",
       marginBottom: "9px",
       marginLeft: "9px",
+   
     },
 
     Paper: {
-      width: "250px",
+      width: "350px",
       height: "100%",
       fontsize: "12px",
       flex: "0 0 auto",
       display: "flex",
       flexDirection: "column",
-      position: "relative",
-      backgroundColor: "Bla",
-      padding: "15px",
-      scrollX: "",
+       padding: "15px",
+      backgroundImage:"url(https://images.rawpixel.com/image_600/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA1L3Y5MDQtbnVubnktMDA0LWFfMi5qcGc.jpg)",
     },
 
     genreForm: {
@@ -191,6 +190,13 @@ function PreviewPodcast({ onPodcastClick }) {
               required
             />
           </div>
+          <button
+          className="SearchButton"
+          style={CardStyles.SearchButton}
+          onClick={handleSearch}
+        >
+          Search
+        </button>
           <div>
             <select
               className="genreForm"
@@ -208,13 +214,7 @@ function PreviewPodcast({ onPodcastClick }) {
           </div>
         </form>
 
-        <button
-          className="SearchButton"
-          style={CardStyles.SearchButton}
-          onClick={handleSearch}
-        >
-          Search
-        </button>
+       
         <div>
           <select
             className="sortButton"

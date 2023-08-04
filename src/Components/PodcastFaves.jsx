@@ -1,17 +1,17 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-import { styled, useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { styled, useTheme } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Drawer from "@mui/material/Drawer";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
-import PreviewPodcast from "./testingcomps/PreviewPodcast";
+import PreviewPodcast from "./PreviewPodcast";
 
 function PodcastFaves({
   showData,
@@ -23,7 +23,7 @@ function PodcastFaves({
   isFavorite,
   handleToggleFavorite,
   likeIcon,
-  favoriteList
+  favoriteList,
 }) {
   // State to store the user's favorite episodes
   const [favoriteEpisodes, setFavoriteEpisodes] = useState([]);
@@ -53,22 +53,45 @@ function PodcastFaves({
     localStorage.setItem("favorites", JSON.stringify(favoriteEpisodes));
   }, [favoriteEpisodes]);
 
-  
-const drawerWidth = 360;
+  const FaveStyles = {
+    Body: {
+      backgroundImage:
+        "url(https://images.rawpixel.com/image_600/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA1L3Y5MDQtbnVubnktMDA0LWFfMi5qcGc.jpg)",
+      paddingLeft: "40px",
+      color: "white",
+    },
+    Drawer: {
+      color: "#841e62",
+      fontSize: "55px",
+      fontFamily: "New Century Schoolbook, TeX Gyre Schola, serif",
+      paddingLeft: "40px",
+    },
+    BodyArt: {
+      color: "#841e62",
+      fontSize: "55px",
+      fontFamily: "New Century Schoolbook, TeX Gyre Schola, serif",
+      paddingLeft: "40px",
+      display: "flex",
+      background: "pink",
+    },
+    BodyImg: {
+      width: "50%",
+      height: "50%",
+    },
+  };
 
+  const drawerWidth = 360;
 
+  const DrawerHeader = styled("div")(({ theme }) => ({
+    display: "flex",
+    alignItems: "center",
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+    justifyContent: "flex-start",
+  }));
 
-
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-  justifyContent: 'flex-start',
-}));
-
-const theme = useTheme();
+  const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
@@ -79,67 +102,60 @@ const theme = useTheme();
     setOpen(false);
   };
 
-
   return (
-   
     <div>
-      
-     
-<Box sx={{ display: 'flex' }}>
-    
-    <IconButton
-      color="inherit"
-      aria-label="open drawer"
-      edge="end"
-      onClick={handleDrawerOpen}
-      sx={{ ...(open && { display: 'none' }) }}
-    > 
-      <MenuIcon />
-      
-      <Typography> <h3>Search & My Favorites</h3></Typography>
-    </IconButton>
-    
-    
-    <Drawer
-    sx={{
-    width: drawerWidth,
-    flexShrink: 0,
-    '& .MuiDrawer-paper': {
-      width: drawerWidth,
-    },
-    }}
-    variant="persistent"
-    anchor="right"
-    open={open}
-    >
-    <DrawerHeader>
-    <IconButton onClick={handleDrawerClose}>
-      {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-    </IconButton>
-    </DrawerHeader>
-    
-    <Divider />
-    < PreviewPodcast/>
-       {/* Display favorite episodes */}
-       {favoriteEpisodes.map((episode) => (
+      <Box sx={{ display: "flex" }} className="Body" style={FaveStyles.Body}>
+        <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          edge="end"
+          onClick={handleDrawerOpen}
+          sx={{ ...(open && { display: "none" }) }}
+        >
+          <MenuIcon />
+
+          <Typography>
+            {" "}
+            <h3>Search & My Favorites</h3>
+          </Typography>
+        </IconButton>
+
+        <Drawer
+          sx={{
+            width: drawerWidth,
+            flexShrink: 0,
+            "& .MuiDrawer-paper": {
+              width: drawerWidth,
+            },
+          }}
+          variant="persistent"
+          anchor="right"
+          open={open}
+        >
+          <DrawerHeader>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === "rtl" ? (
+                <ChevronLeftIcon />
+              ) : (
+                <ChevronRightIcon />
+              )}
+            </IconButton>
+          </DrawerHeader>
+
+          <Divider />
+          <PreviewPodcast />
+          {/* Display favorite episodes */}
+          {favoriteEpisodes.map((episode) => (
             <div key={episode.id}>
               <h2>{episode.show}</h2>
               <p>Season: {episode.season}</p>{" "}
               <p>Episode Title: {episode.title}</p>
-          
             </div>
-    
-    
           ))}
-    </Drawer>
-    </Box>
-    
-   
-    
+        </Drawer>
+      </Box>
     </div>
-   
   );
 }
 
 export default PodcastFaves;
-
