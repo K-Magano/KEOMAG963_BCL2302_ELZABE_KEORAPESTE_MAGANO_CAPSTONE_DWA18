@@ -8,11 +8,18 @@ const AudioStyles = {
       background: " #b52d5b",
       display: "flex",
       flexDirection: "row",
+      
     },
     currentProgress:{
      fontSize:"15px",
      color:"white"
     },
+    PlayButton:{
+      border:"none",
+      background:"transparent",
+      
+      color:"white",
+    }
   };
 
  // Helper function to format time in mm:ss format
@@ -87,11 +94,11 @@ function AudioPlayer({ showData,
           className="Faves"
           onClick={handleToggleFavorite}
         />
-        <audio ref={audioRef} controls>
+        <audio ref={audioRef} controls >
           <source src={file} type="audio/mpeg" />
           Oops, your browser does not support the audio element.
         </audio>
-        <button onClick={handleTogglePlay}>
+        <button onClick={handleTogglePlay} className='PlayButton' style={AudioStyles.PlayButton}>
           {isPlaying ? "Pause" : "Play"}
         </button>
         <div className="currentProgress" style={AudioStyles.currentProgress}>

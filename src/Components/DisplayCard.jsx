@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { Grid, Paper } from "@mui/material";
 import AudioPlayer from "../Components/AudioPlayer.jsx";
 
@@ -161,7 +161,10 @@ the progress object has no values for currentTime and duration*/
     // If the same season button is clicked again, deselect it
     setSelectedSeason((prevSelectedSeason) =>
       prevSelectedSeason === seasonTitle ? null : seasonTitle
+
     );
+// Set loading State while fetching Data 
+ 
   };
 
 

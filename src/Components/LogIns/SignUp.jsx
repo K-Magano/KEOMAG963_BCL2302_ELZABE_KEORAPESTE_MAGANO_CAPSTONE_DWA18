@@ -90,21 +90,11 @@ function handleSubmit(event) {
             onChange={handleChange}
           />
           
+          
           <TextField
           type="Password"
             id="standard-basic"
-            label="Password"
-            variant="standard"
-            placeholder="Create Password"
-            fullWidth
-            name="password"
-            value={formData.Password}
-            onChange={handleChange}
-          />
-          <TextField
-          type="Password"
-            id="standard-basic"
-            label="Confirm Password"
+            label="Create Password"
             variant="standard"
             placeholder="Create Password"
             fullWidth

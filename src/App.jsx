@@ -13,6 +13,9 @@ function App() {
   const BodyStyles = {
     Body: {
       paddingLeft: "40px",
+      height:"100%",
+      width:"100%",
+      backgroundColor:"",
     },
     Heading: {
       color: "#841e62",
@@ -182,15 +185,10 @@ function App() {
         </h1>
       </div>
 
-      <CarouselComponent />
-      <PodcastFaves favoriteList={favoriteList} isFavorite={isFavorite} />
-
-      {/*<HomePage/>  
-
-      
-    */}
-
-      <DisplayCard
+      <HomePage/>  
+     
+      {/*
+ <DisplayCard
         selectedShowId={selectedShowId}
         showData={showData}
         loading={loading}
@@ -203,6 +201,11 @@ function App() {
         handleShowButtonClick={handleShowButtonClick}
         filteredGenres={filteredGenres}
       />
+        <CarouselComponent />
+      <PodcastFaves favoriteList={favoriteList} isFavorite={isFavorite} />
+    */}
+
+     
     </div>
   );
 }
