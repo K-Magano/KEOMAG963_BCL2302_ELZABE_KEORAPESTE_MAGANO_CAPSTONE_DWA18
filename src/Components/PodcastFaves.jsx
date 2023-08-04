@@ -73,24 +73,19 @@ const handleToggleFavorite = (showId) => {
       paddingLeft: "40px",
       color: "white",
     },
-    Drawer: {
-      color: "#841e62",
-      fontSize: "55px",
-      fontFamily: "New Century Schoolbook, TeX Gyre Schola, serif",
-      paddingLeft: "40px",
-    },
-    BodyArt: {
-      color: "#841e62",
-      fontSize: "55px",
-      fontFamily: "New Century Schoolbook, TeX Gyre Schola, serif",
-      paddingLeft: "40px",
-      display: "flex",
-      background: "pink",
-    },
+
+
     BodyImg: {
       width: "50%",
       height: "50%",
     },
+
+    History:{
+      color:"#841e62",
+      fontSize:"20px",
+      marginLeft:"30px",
+    },
+ 
   };
 
   const drawerWidth = 360;
@@ -154,8 +149,16 @@ const handleToggleFavorite = (showId) => {
               )}
             </IconButton>
           </DrawerHeader>
+      <section className="History" style={FaveStyles.History}>
+        <h3 >My History: </h3>
+        <p>All your favorites and history tucked away safely  </p>
 
+        <Divider />
+
+
+       </section>
           <Divider />
+       
          <Paper> 
           {/* Display favorite episodes */}
           {favoriteEpisodes.map((episode) => (

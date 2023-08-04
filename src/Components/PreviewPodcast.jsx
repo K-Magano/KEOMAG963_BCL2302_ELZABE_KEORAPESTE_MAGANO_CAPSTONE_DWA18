@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Grid } from "@mui/material";
-
+import RestButton from "./RestButton";
 function PreviewPodcast({ onPodcastClick }) {
   const [podcasts, setPodcasts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -237,6 +237,8 @@ function PreviewPodcast({ onPodcastClick }) {
           Remove from Favorites
         </button>
 
+
+        <RestButton/>
         {podcasts.map((podcast) => (
           <div
             key={podcast.id}
